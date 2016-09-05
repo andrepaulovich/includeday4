@@ -1,26 +1,61 @@
 var Agenda = function () {
-        
+
+    //Dispenser ids porque os valores estão fixos no código como BH e Campinas
+    //var dispenserList = [{'value':1,'name':'BH'},{'value':2,'name':'Campinas'}];
+
     ///*
     // Esta função é usada limpar a tela, voltando os controles para os valores padrão
     ///*
     var limparFormulario = function () {
-        $('#id-incidente').val('');
-        $('#tipo').val('');
-        $('#gravidade').val('');
-        $('#logradouro').val('');
-        $('#numero').val('');
-        $('#cidade').val('');
-        $('#estado').val('');
-        $('#time').val('');
-        $('#descricao').val('');
+            $('#dispenser').val(''),
+            $('#medicamento').val(''),
+            $('#inicio').val('')
+            $('#intervalo').val('');
     };
 
     ///*
-    // Esta função é usada para carregar os valores do incidente nos controles da tela
+    // Esta função é usada para salvar a agenda no banco de dados do serviço
+    ///*
+    var cadastrarItem = function (latlong) {
+
+        /// criação do objeto que deve ser persistido no serviço
+        /// esta estrutura de dados JSON recebe os valores dos controles na tela
+        var item = {
+            idDispenser: $('#dispenser').val(),
+            numeroMedicamento: $('#medicamento').val(),
+            dataInicio: new Date($('#inicio').val()).toJSON(),
+            intervaloMinutos: $('#intervalo').val()
+        };
+
+        if (item === null) {
+            return;
+        };
+
+        $.ajax({
+            async: true,
+            type: "POST",
+            data: JSON.stringify(item),
+            url: API_URL + '/agenda/v1/new',
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                limparFormulario();
+                carregarLista();
+                bootbox.alert('Cadastrado com sucesso!');
+            },
+            error: function (xhr) {
+                bootbox.alert(xhr.responseJSON.error.message);
+            }
+        });
+
+    }
+
+    ///*
+    // Esta função é usada para carregar os valores da agenda nos controles da tela
     // Ele deve requisitar um incidente usando o valor do id que está no atributo 'id-objeto'
     ///*
     var editarItem = function () {
-        
+
         // neste caso $this é o link que foi clicado
         var $this = $(this);
         
@@ -30,24 +65,18 @@ var Agenda = function () {
         $.ajax({
             async: true,
             type: "GET",
-            url: API_URL + '/agenda/v1/incidentes/' + $id,
+            url: API_URL + '/agenda/v1/get/' + $id,
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 
-                // quando o serviço recupera com sucesso um objeto incidente
+                // quando o serviço recupera com sucesso um objeto agenda
                 // o valor da variável 'data' virá com os dados do objeto
                 // em seguida usamos os valores para aprentar nos controles da tela                
-                $('#id-incidente').val(data.id);
-                $('#tipo').val(data.idTipoIncidente);
-                $('#gravidade').val(data.gravidade);
-                $('#logradouro').val(data.logradouro);
-                $('#numero').val(data.numero);
-                $('#cidade').val(data.cidade);
-                $('#estado').val(data.estado);
-                $('#time').val(data.idTime);
-                $('#descricao').val(data.descricao);
-                
+                $('#dispenser').val(data.idDispenser);
+                $('#medicamento').val(data.numeroMedicamento);
+                $('#inicio').val(data.dataInicio);
+                $('#intervalo').val(data.intervaloMinutos);
             },
             error: function (xhr) {
                 bootbox.alert(xhr.responseJSON.error.message);
@@ -55,55 +84,7 @@ var Agenda = function () {
         });
     };
     
-    ///*
-    // Esta função é usada para salvar o incidente no banco de dados do serviço
-    // Ela já recebe os valores das coordenadas que vieram da função obterCoordenadas (chamada pela cadastrarItem)
-    ///*
-    var persistirItem = function (latlong) {
-        
-        /// criação do objeto que deve ser persistido no serviço
-        /// esta estrutura de dados JSON recebe os valores dos controles na tela        
-        var item = {
-            idTipoIncidente: $('#tipo').val(),
-            gravidade: $('#gravidade').val(),
-            logradouro: $('#logradouro').val(),
-            numero: $('#numero').val(),
-            cidade: $('#cidade').val(),
-            estado: $('#estado').val(),
-            idTime: $('#time').val(),
-            descricao: $('#descricao').val(),
-            data: new Date().toJSON().slice(0,10),
-            localizacao: {
-                latitude: latlong.lat.toString(),
-                longitude: latlong.long.toString()
-            } 
-        };
-        
-        if ($('#id-incidente').val() != '') {
-            item.id = $('#id-incidente').val();
-        };
 
-        $.ajax({
-            async: true,
-            type: "POST",
-            data: JSON.stringify(item),
-            url: API_URL + '/incidentes/v1/agenda?alt=json',
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                limparFormulario();
-                carregarLista();
-                
-                acionarSirene(1, 0, 1);
-                
-                bootbox.alert('Cadastrado/Editado com sucesso!');
-            },
-            error: function (xhr) {
-                bootbox.alert(xhr.responseJSON.error.message);
-            }
-        });
-        
-    }
 
     ///*
     // Esta função é usada para remover o incidente no banco de dados do serviço
@@ -179,7 +160,7 @@ var Agenda = function () {
                     $.each(data.items, function (i, item) {
                         
                         var tr = $('<tr/>');
-                        
+
                         tr.append("<td>" + item.idDispenser + "</td>");
                         tr.append("<td>" + Utils.obterNomeMedicamento(item.numeroMedicamento) + "</td>");
                         tr.append("<td>" + item.dataInicio + "</td>");                        
@@ -216,8 +197,9 @@ var Agenda = function () {
     return {
         //Função principal que inicializa o módulo
         inicializar: function () {
-            //$('#btn-cadastrar').click(cadastrarItem);
             carregarLista();
+            $('#btn-cadastrar').click(cadastrarItem);
+
         }
     };
 } ();
