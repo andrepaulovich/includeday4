@@ -18,33 +18,19 @@ var Index = function () {
                         
                         if (item.id == null) return true;
                         
-                        var template = "<div class='col-sm-4 col-lg-4 col-md-4'>";
+                        var template = "<div class='col-sm-12 col-lg-4 col-md-4'>";
                         template += ("<div class='thumbnail'>");
                         
-                        template += ("<div class='caption'>");
-                        template += ("<h4><a href='#'>" + item.idDispenser + "</a></h4>");
-                        template += ("<p>" + item.numeroMedicamento + "</p>");
+                        template += ("<div class='caption'>");                                                
+                        template += ("<h4>");
+                        template += ("<span>" + Utils.obterNomeDispenser(item.idDispenser) + "</span>");
+                        template += ("<span class='pull-right'>" + item.intervaloMinutos + " minutos <span class='glyphicon glyphicon-time'></span></span>");
+                        template += ("</h4>");                        
+                        template += ("<p class='pull-left'>Dosagem: <span class='label label-default'>Caiu? " + Utils.converterTrueFalseEmTexto(item.dosagemCaiu) + "</span></p>");                        
+                        template += ("<p class='pull-left' style='margin-left: 5px'><span class='label label-default'>Retirada? " + Utils.converterTrueFalseEmTexto(item.dosagemRetirada) + "</span></p>");
+                        template += ("<p class='pull-left'>Medicamento: <span class='label label-" + Utils.obterCorTipoMedicamento(item.numeroMedicamento) + "'>" + Utils.obterNomeMedicamento(item.numeroMedicamento) + "</span></p>");                        
                         template += ("</div>");
-                        template += ("<div class='ratings'>");
-                        template += ("<p class='pull-right'></p>");
-                        template += ("<p>");
                         
-                        if (item.numeroMedicamento == 1) {
-                            template += ("<span class='glyphicon glyphicon-star'></span>");
-                            template += ("<span class='glyphicon glyphicon-star-empty'></span>");
-                            template += ("<span class='glyphicon glyphicon-star-empty'></span>");
-                        } else if (item.numeroMedicamento == 2){
-                            template += ("<span class='glyphicon glyphicon-star'></span>");
-                            template += ("<span class='glyphicon glyphicon-star'></span>");
-                            template += ("<span class='glyphicon glyphicon-star-empty'></span>");
-                        } else {
-                            template += ("<span class='glyphicon glyphicon-star'></span>");
-                            template += ("<span class='glyphicon glyphicon-star'></span>");
-                            template += ("<span class='glyphicon glyphicon-star'></span>");
-                        }
-                        
-                        template += ("</p>");
-                        template += ("</div>");
                         template += ("</div>");
                         template += ("</div>");
 
