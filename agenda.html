@@ -59,8 +59,18 @@
                                 <div id="map"></div>
                                 
                                 <form class="form-horizontal row-border" action="#">
-                                    
-                                   <div class="form-group">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label" for="dispenser">Dispenser</label>
+                                        <div class="col-md-10">
+                                            <select class="form-control" id="dispenser">
+                                                <option value="">-- Selecione uma opção --</option>
+                                                <option value="5631986051842048">BH</option>
+                                                <option value="2">Campinas</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label class="col-md-2 control-label" for="medicamento">Medicamento</label>
                                         <div class="col-md-10">
                                             <select class="form-control" id="medicamento">
@@ -72,18 +82,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="col-md-2 control-label" for="dispenser">Dispenser</label>
-                                        <div class="col-md-10">
-                                            <select class="form-control" id="dispenser">
-                                                <option value="">-- Selecione uma opção --</option>
-                                                <option value="1">BH</option>
-                                                <option value="2">Campinas</option>
-                                            </select>
-                                        </div>
-                                    </div>
-									
+                                    <!--inserir componente data no campo inicio-->
 									<div class="form-group">
                                         <label class="col-md-2 control-label" for="inicio">Início</label>
                                         <div class="col-md-10">
@@ -110,53 +109,13 @@
                     </div>
                 </div>
                 <!-- Row end -->
-				
-				<! --
-				
-				{
-				  "items":[
-					{
-					  "id": "5629499534213120",
-					  "idDispenser": "5631986051842048",
-					  "numeroMedicamento": 1,
-					  "dataInicio": "2016-08-25T13:50:00.000Z",
-					  "intervaloMinutos": 5,
-					  "dosagemCaiu": false,
-					  "dosagemRetirada": false,
-					  "kind": "agenda#resourcesItem"
-					},
-					{
-					  "id": "5639445604728832",
-					  "idDispenser": "5631986051842048",
-					  "numeroMedicamento": 1,
-					  "dataInicio": "2016-09-02T10:10:00.000Z",
-					  "intervaloMinutos": 5,
-					  "dosagemCaiu": false,
-					  "dosagemRetirada": false,
-					  "kind": "agenda#resourcesItem"
-					},
-					{
-					  "id": "5649391675244544",
-					  "idDispenser": "5631986051842048",
-					  "numeroMedicamento": 2,
-					  "dataInicio": "2016-08-25T13:50:00.000Z",
-					  "intervaloMinutos": 12,
-					  "dosagemCaiu": false,
-					  "dosagemRetirada": false,
-					  "kind": "agenda#resourcesItem"
-					}]
-				}
-				
-				-->
-
-                <table class="table table-bordered" summary="Tabela de incidentes cadastrados">
+				<table class="table table-bordered" summary="Tabela de incidentes cadastrados">
                     <thead>
                         <tr>
                             <th style="width: 20%">Dispenser</th>
                             <th style="width: 20%">Medicamento</th>
                             <th style="width: 20%">Início</th>
-                            <th style="width: 15%">Caiu?</th>
-							<th style="width: 15%">Retirado?</th>
+                            <th style="width: 15%">Retirado?</th>
                             <th style="width: 10%">Intervalo</th>
                             <th style="white-space: nowrap;">- Ações -</th>
                         </tr>
@@ -192,7 +151,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html" accesskey="I">Include Day - CI&T</a>
+                <a class="navbar-brand" href="index.html" accesskey="I">Painel</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

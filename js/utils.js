@@ -38,6 +38,36 @@ var Utils = function () {
         }
     }
 
+    var obterCorTipoMedicamento = function(tipoMedicamento){
+        var cor = "";
+        if(tipoMedicamento == 1){
+            cor = "warning";
+        } else if (tipoMedicamento == 2){
+            cor = "danger";
+        } else if (tipoMedicamento == 3){
+            cor = "primary";            
+        } else if (tipoMedicamento == 4){
+            cor = "success";
+        } else {
+            cor = "default";
+        }
+        return cor;
+    }
+
+    var obterNomeDispenser = function(id){
+        var dispenser = "";
+
+        if(id == ID_DISPENSER_BH){
+            dispenser = "Belo Horizonte";
+        } else if (id == ID_DISPENSER_CAMPINAS){
+            dispenser = "Campinas";
+        } else {
+            dispenser = "Não identificado";
+        }
+
+        return dispenser;
+    }
+
     ///*
     // Esta função converte os valores do medicamento em texto
     ///*
@@ -55,6 +85,8 @@ var Utils = function () {
         },        
         limparLista: limparLista,
         obterNomeMedicamento: obterNomeMedicamento,
-        converterTrueFalseEmTexto: converterTrueFalseEmTexto
+        converterTrueFalseEmTexto: converterTrueFalseEmTexto,
+        obterCorTipoMedicamento: obterCorTipoMedicamento,
+        obterNomeDispenser: obterNomeDispenser
     };
 } ();
