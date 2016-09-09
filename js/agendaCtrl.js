@@ -161,16 +161,14 @@ var Agenda = function () {
                         
                         var tr = $('<tr/>');
 
-                        tr.append("<td>" + item.idDispenser + "</td>");
+                        tr.append("<td>" + Utils.obterNomeDispenser(item.idDispenser) + "</td>");
                         tr.append("<td>" + Utils.obterNomeMedicamento(item.numeroMedicamento) + "</td>");
                         tr.append("<td>" + item.dataInicio + "</td>");                        
-                        tr.append("<td>" + Utils.converterTrueFalseEmTexto(item.dosagemCaiu) + "</td>");
                         tr.append("<td>" + Utils.converterTrueFalseEmTexto(item.dosagemRetirada) + "</td>");
                         tr.append("<td>" + item.intervaloMinutos + "</td>");
                         
                         var template = "<td>";
                         template += "<div class='btn-group btn-group-xs btn-group-show-label'>";
-                        template += "<button type='button' name='botao-editar' id='botao-editar' id-objeto='" + item.id + "' class='btn btn-default'><span class='glyphicon glyphicon glyphicon-pencil' aria-hidden='true'>Editar</span></button>";
                         template += "<button type='button' name='botao-remover' id='botao-remover' id-objeto='" + item.id + "' class='btn btn-danger'><span class='glyphicon glyphicon glyphicon-remove' aria-hidden='true'>Remover</span></button>";
                         template += "</div>";
                         template += "</td>";
@@ -199,7 +197,10 @@ var Agenda = function () {
         inicializar: function () {
             carregarLista();
             $('#btn-cadastrar').click(cadastrarItem);
-
+            $('.datepicker').datepicker({
+                format: 'mm/dd/yyyy',
+                startDate: '-3d'
+            });
         }
     };
 } ();
